@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Capstone travel app</title>
+    <meta name="description" content="The homepage for my personal blog" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/styles.scss"/>
+    <script type="text/javascript" src="../../../dist/main.js"></script>
+
+  </head>
+
+  <body>
+    <div class="container">
+    <header>
+     <h1>Capstone travel app</h1>
+    </header>
+
+    <section class="userInput">
+      <div id="app">
+        <div class="city">
+          <label for="city">Destination</label>
+          <input type="text" id="city" placeholder="Enter City Here" />
+        </div>
+        <div class="dateGoing">
+          <label for="date">Departing date</label>
+          <input type="date" class="datePicker" />
+        </div>
+        <div class="dateReturning">
+          <label for="date">Return date</label>
+          <input type="date" class="datePicker" />
+        </div>
+        <button id="generate" type="submit">Submit</button>
+      </div>
+      </section>
+      <section class="results">
+    <div class="output">
+      <h3>Length of trip</h3>
+      <div id="details"></div>
+      <h3>Forecast for trip</h3>
+      <div id="content"></div>
+      </div>
+      </section>
+      <section class="image-div">
+        <div class="pbimg">
+      <img id="image" />
+    </div>
+  </section>
+
+    <footer>
+      <p>Footer</p>
+  </footer>
+    </div>
+
+    <script>
+      // Check that service workers are supported
+      if ("serviceWorker" in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/service-worker.js");
+        });
+      }
+    </script>
+  </body>
+</html>
