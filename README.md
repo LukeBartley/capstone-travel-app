@@ -7,7 +7,10 @@ npm run build-dev
 npm run build-dev-open
 
 ## To run prod server
-npm run start
+npm run build-prod
+
+## To start app
+npm start
 
 ## Jest to test
 npm run test
