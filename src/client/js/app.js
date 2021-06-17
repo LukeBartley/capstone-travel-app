@@ -1,131 +1,144 @@
-// Geonames + API keys
-let geonamesUn = "lbartley";
-let weatherbitAPI = "54e623975a2d4fed9ab8718c0d2a1776";
-let pixabayAPI = "22082763-50f36d5fd38179c82a76e8b03";
+// API keys
+let apiPixabay = "22082763-50f36d5fd38179c82a76e8b03";
+let idGeonames = "lbartley";
+let apiWeatherbit = "54e623975a2d4fed9ab8718c0d2a1776";
 
-//API calls
-//Geonames
-const getGeonames = async (city) => {
-    const url = `http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=${geonamesUn}`;
+
+
+
+// APIs
+
+// Pixabay
+const infoFromPixabay = async (city) => {
+  const url = `https://pixabay.com/api/?key=${apiPixabay}&q=${city}&image_type=photo`;
+  const res = await fetch(url);
+  try {
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    alert("There is something wrong with Pixabay", error);
+  }
+};
+
+
+// Geonames
+const infoFromGeonames = async (city) => {
+    const url = `http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=${idGeonames}`;
     const res = await fetch(url);
     try {
       const data = await res.json();
       return data;
     } catch (error) {
-      alert("Error!", error);
+      alert("There is something wrony with Geonames", error);
     }
   };
 
-  //Weatherbit
-  const getWeatherBit = async (lat, lng) => {
-    const url = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&key=${weatherbitAPI}`;
+
+
+  // Weatherbit
+  const infoFromWeatherbit = async (lat, lng) => {
+    const url = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&key=${apiWeatherbit}`;
     const res = await fetch(url);
     try {
       const data = await res.json();
       return data;
     } catch (error) {
-      alert("Error!", error);
+      alert("There is something wrong with Weatherbit", error);
     }
   };
 
-  //Pixabay
-  const getPixabay = async (city) => {
-    const url = `https://pixabay.com/api/?key=${pixabayAPI}&q=${city}&image_type=photo`;
-    const res = await fetch(url);
-    try {
-      const data = await res.json();
-      return data;
-    } catch (error) {
-      alert("Error!", error);
-    }
-  };
 
-//Gather the information
-const performAction = async () => {
-  let city = document.getElementById("city").value;
-  let dateGoing = document.getElementsByClassName("datePicker")[0].value;
-  let dateReturning = document.getElementsByClassName("datePicker")[1].value;
-
-  //Dates
+  // Get trip details
+  const tripDetails = async () => {
+    let city = document.getElementById("city").value;
+    let dateOfDeparture = document.getElementsByClassName("datePicker")[0].value;
+    let dateOfReturn = document.getElementsByClassName("datePicker")[1].value;
 
 
-  //Function for dates of trip
+  // Dates
+
+
+  // Function for dates of trip
   let d = new Date();
-  const daysToGo = Math.floor(
-    (new Date(dateGoing).getTime() - d.getTime()) / (1000 * 3600 * 24)
+  const countdownDays = Math.floor(
+    (new Date(dateOfDeparture).getTime() - d.getTime()) / (1000 * 3600 * 24)
   );
-  const tripLength = Math.ceil(
-    (new Date(dateReturning).getTime() - new Date(dateGoing).getTime()) /
+  const totalTrip = Math.ceil(
+    (new Date(dateOfReturn).getTime() - new Date(dateOfDeparture).getTime()) /
       (1000 * 3600 * 24)
   );
 
-  // Display message
+  // Display details of the trip
   document.getElementById(
     "details"
-  ).innerHTML = `You leave in ${daysToGo} days <br> and will be away for ${tripLength} days`;
+  ).innerHTML = `You leave in ${countdownDays} days <br> and will be away for ${totalTrip} days`;
 
-  // API information
-  //Call for returning latitude and longitude
-  getGeonames(city)
+
+  // Call for latitude and longitude coordinates
+  infoFromGeonames(city)
     .then((data) => {
-      return postData("http://localhost:7071/geonames", {
+      return postData("http://localhost:7070/geonames", {
         latitude: data.geonames[0].lat,
         longitude: data.geonames[0].lng,
       });
     })
-    //Variables for holding the latitute and longitude coordinates
+
+    // Variables for holding the latitute and longitude coordinates
     .then((res) => {
       const lat = res[res.length - 1].latitude;
       const lng = res[res.length - 1].longitude;
       return { lat, lng };
     })
-    //Watherbit call using the coordinates
+
+    // Weatherbit call using the coordinates
     .then(({ lat, lng }) => {
-      return getWeatherBit(lat, lng);
+      return infoFromWeatherbit(lat, lng);
     })
-    //Variables to hold data from Weatherbit by Pixabay
+
+    // Variables to hold data from Weatherbit by Pixabay
     .then((weatherData) => {
-      return postData("http://localhost:7071/weatherbit", {
+      return postData("http://localhost:7070/weatherbit", {
         high: weatherData.data[0].high_temp,
         low: weatherData.data[0].low_temp,
         description: weatherData.data[0].weather.description,
       });
     })
-    //Get city image
+
+    // Get city image
     .then(() => {
-      return getPixabay(city);
+      return infoFromPixabay(city);
     })
-    //Variables to hold the data returned from Pixabay
+
+    // Variables to hold the data returned from Pixabay
     .then((data) => {
-      return postData("http://localhost:7071/pixabay", {
+      return postData("http://localhost:7070/pixabay", {
         image: data.hits[1].webformatURL,
-      }).then(uiUpdate());
+      }).then(updateDisplayInfo());
     });
 };
 
 
-//Updating the UI
-const uiUpdate = async () => {
-  const res = await fetch("http://localhost:7071/data");
+// Update UI
+const updateDisplayInfo = async () => {
+  const res = await fetch("http://localhost:7070/data");
   try {
     const dataPoints = await res.json();
     document.getElementById(
       "content"
-      //Fill out UI information with the returned data from API calls
-    ).innerHTML = `Max temp: ${
+    ).innerHTML = `Max temp will be ${
       dataPoints[dataPoints.length - 2].high
-    }<br> Min temp: ${dataPoints[dataPoints.length - 2].low} <br>  ${
+    }<br> Min temp will be ${dataPoints[dataPoints.length - 2].low} with a chance of ${
       dataPoints[dataPoints.length - 2].description
     }`;
 
-    //Image from Pixabay and fill the "image" div in the HTML
+    // Grab image from Pixabay and fill div in on page
     document.getElementById("image").src = dataPoints[dataPoints.length - 1].image;
   } catch (error) {
     console.log(error);
   }
 };
 
-//POST
+// POST
 const postData = async (url = "", data = {}) => {
   const response = await fetch(url, {
     method: "POST",
@@ -144,19 +157,18 @@ const postData = async (url = "", data = {}) => {
 };
 
 
-//Button
 document.addEventListener("DOMContentLoaded", () => {
   const button_submit = document.getElementById("generate");
-  button_submit.addEventListener("click", performAction);
+  button_submit.addEventListener("click", tripDetails);
 });
 
 
-//Export the functions
+// Export functions
 export {
-    getGeonames,
-    getWeatherBit,
-    getPixabay,
-    performAction,
-    uiUpdate,
+    infoFromGeonames,
+    infoFromPixabay,
+    infoFromWeatherbit,
+    updateDisplayInfo,
+    tripDetails,
     postData,
 };

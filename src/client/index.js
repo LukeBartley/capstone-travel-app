@@ -1,21 +1,23 @@
 import {
-    getGeonames,
-    getWeatherBit,
-    getPixabay,
-    performAction,
-    uiUpdate,
+    infoFromGeonames,
+    infoFromWeatherbit,
+    infoFromPixabay,
+    tripDetails,
+    updateDisplayInfo,
     postData,
-  } from "./js/app.js";
+  }
+
+  from "./js/app.js";
 
   import "./styles/styles.scss";
 
   export {
-    performAction,
-    uiUpdate,
+    infoFromGeonames,
+    infoFromWeatherbit,
+    infoFromPixabay,
+    tripDetails,
+    updateDisplayInfo,
     postData,
-    getGeonames,
-    getWeatherBit,
-    getPixabay,
   };
 
 

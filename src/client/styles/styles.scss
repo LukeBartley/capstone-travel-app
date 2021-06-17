@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap);
 
+// Variables
 $font-main: 'Fjalla One', sans-serif;
-$font-head: 'Roboto';
 $colour-beige: #f5f5dc;
 $colour-dark-blue: #00008B;
 $colour-dark-grey: #708090;
@@ -11,7 +11,9 @@ body {
   min-height: 100vh;
 }
 
-/*Mobile screen  */
+
+
+/* Mobile */
 .container {
   display: grid;
   grid-template-columns: 1fr;
@@ -19,21 +21,21 @@ body {
   grid-template-areas:
       "hd"
       "ui"
-      "res"
       "img"
+      "info"
       "ft";
 }
 
-/*Large screen */
+/* Large screen */
 @media (min-width: 750px) {
 .container {
   display: grid;
   grid-template-columns: 0.6fr 0.7fr 1.7fr;
-  grid-template-rows: 0.5fr 2.2fr 0.3fr;
+  grid-template-rows: 0.4fr 2.2fr 0.4fr;
   gap: 0px 0px;
   grid-template-areas:
     "hd hd hd"
-    "ui res img"
+    "ui img info"
     "ft ft ft";
   }
 }
@@ -42,23 +44,25 @@ header {
   grid-area: hd;
 }
 
-.userInput {
+.ui {
   grid-area: ui;
 }
 
-.results {
-  grid-area: res;
+.trip-info {
+  grid-area: info;
 }
 
-.image-div {
+.city-image-div {
   grid-area: img;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 footer {
   grid-area: ft;
 }
 
-/* Resize images */
+/* Sizing */
 .image-div > image {
   object-fit: cover;
   width: 100%;
@@ -95,14 +99,14 @@ body {
   }
 
   h2 {
-    font: 2.5rem $font-head;
+    font: 2.5rem $font-main;
     font-weight: 600;
     color: $colour-dark-blue;
     margin-top: 1rem;
   }
 
   h3 {
-    font: 2rem $font-head;
+    font: 2rem $font-main;
     font-weight: 400;
     color: $colour-dark-blue;
     margin-top: .5rem;
@@ -119,7 +123,6 @@ body {
     width: 250px;
     background: $colour-beige;
     color: $colour-dark-grey;
-    cursor: pointer;
     font-family: "Crimson Pro", sans-serif;
     font-size: 1rem;
     margin: .5rem 0 .5rem 0;
@@ -129,10 +132,9 @@ body {
     align-items: center;
     background: $colour-beige;
     color: $colour-dark-grey;
-    // font-size: 18px;
-    text-transform: uppercase;
     border: 1px solid $colour-dark-grey;
     margin: 10px 0 15px;
+    text-transform: uppercase;
     padding: 10px 15px;
 }
 button:hover {

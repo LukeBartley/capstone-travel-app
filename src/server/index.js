@@ -1,30 +1,33 @@
-// Empty object for endpoint data
+// Empty data object
 let projectData = [];
 
-// Require the things
+// Express
 const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-
-// Use the things
 const app = express();
-app.use(cors());
+
+// Body parser
+const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Cors
+const cors = require("cors");
+app.use(cors());
+
+// Build dist folder
 app.use(express.static("dist"));
 
-// Spin up the Server
-const port = 7070;
-const server = app.listen(port, () => {
-  console.log(`running on port: ${port}`);
-});
+
+
 
 // Get
 app.get("/data", (req, res) => {
   res.send(projectData);
 });
 
-// POST - Geonames
+
+
+// Geonames POST
 app.post("/geonames", (req, res) => {
   geonamesData = {
     latitude: req.body.latitude,
@@ -34,7 +37,9 @@ app.post("/geonames", (req, res) => {
   res.send(projectData);
 });
 
-// POST Weatherbit
+
+
+// Weatherbit POST
 app.post("/weatherbit", (req, res) => {
   weatherBitData = {
     high: req.body.high,
@@ -45,7 +50,9 @@ app.post("/weatherbit", (req, res) => {
   res.send(projectData);
 });
 
-// POST Pixabay
+
+
+// Pixabay POST
 app.post("/pixabay", (req, res) => {
   pixabayData = {
     image: req.body.image,
@@ -54,5 +61,4 @@ app.post("/pixabay", (req, res) => {
   res.send(projectData);
 });
 
-// export
-module.exports = server;
+module.exports = app;

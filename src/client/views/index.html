@@ -11,45 +11,47 @@
   </head>
 
   <body>
-    <div class="container">
+   <div class="container">
     <header>
      <h1>Capstone travel app</h1>
     </header>
 
-    <section class="userInput">
+    <section class="ui">
       <div id="app">
         <div class="city">
           <label for="city">Destination</label>
-          <input type="text" id="city" placeholder="Enter City Here" />
+          <input type="text" id="city" placeholder="Enter your destination" />
         </div>
-        <div class="dateGoing">
+        <div class="departingDate">
           <label for="date">Departing date</label>
           <input type="date" class="datePicker" />
         </div>
-        <div class="dateReturning">
+        <div class="returnDate">
           <label for="date">Return date</label>
           <input type="date" class="datePicker" />
         </div>
         <button id="generate" type="submit">Submit</button>
       </div>
       </section>
-      <section class="results">
-    <div class="output">
-      <h3>Length of trip</h3>
-      <div id="details"></div>
-      <h3>Forecast for trip</h3>
-      <div id="content"></div>
-      </div>
-      </section>
-      <section class="image-div">
-        <div class="pbimg">
-      <img id="image" />
-    </div>
-  </section>
 
-    <footer>
-      <p>Footer</p>
-  </footer>
+      <section class="trip-info">
+        <div class="output">
+          <h3>Length of trip</h3>
+          <div id="details"></div>
+          <h3>Forecast for trip</h3>
+          <div id="content"></div>
+        </div>
+      </section>
+
+      <section class="city-image-div">
+        <div class="city-img">
+          <img id="image" />
+        </div>
+      </section>
+
+      <footer>
+        <p>Footer</p>
+      </footer>
     </div>
 
     <script>
