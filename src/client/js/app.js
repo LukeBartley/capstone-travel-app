@@ -49,6 +49,8 @@ const infoFromGeonames = async (city) => {
 
 
   // Get trip details
+  // Function grabs city, date of departure and
+  // date of return data
   const tripDetails = async () => {
     let city = document.getElementById("city").value;
     let dateOfDeparture = document.getElementsByClassName("datePicker")[0].value;
@@ -74,7 +76,9 @@ const infoFromGeonames = async (city) => {
   ).innerHTML = `You leave in ${countdownDays} days <br> and will be away for ${totalTrip} days`;
 
 
-  // Call for latitude and longitude coordinates
+
+
+  // Call for coordinates
   infoFromGeonames(city)
     .then((data) => {
       return postData("http://localhost:7070/geonames", {
@@ -83,7 +87,7 @@ const infoFromGeonames = async (city) => {
       });
     })
 
-    // Variables for holding the latitute and longitude coordinates
+    // Variables for holding the coordinates
     .then((res) => {
       const lat = res[res.length - 1].latitude;
       const lng = res[res.length - 1].longitude;
@@ -109,7 +113,7 @@ const infoFromGeonames = async (city) => {
       return infoFromPixabay(city);
     })
 
-    // Variables to hold the data returned from Pixabay
+    // Variables to hold Pixabay data
     .then((data) => {
       return postData("http://localhost:7070/pixabay", {
         image: data.hits[1].webformatURL,
@@ -118,7 +122,8 @@ const infoFromGeonames = async (city) => {
 };
 
 
-// Update UI
+
+// Update the info displayed to the user
 const updateDisplayInfo = async () => {
   const res = await fetch("http://localhost:7070/data");
   try {
@@ -131,12 +136,15 @@ const updateDisplayInfo = async () => {
       dataPoints[dataPoints.length - 2].description
     }`;
 
-    // Grab image from Pixabay and fill div in on page
+
+
     document.getElementById("image").src = dataPoints[dataPoints.length - 1].image;
   } catch (error) {
     console.log(error);
   }
 };
+
+
 
 // POST
 const postData = async (url = "", data = {}) => {
@@ -157,6 +165,8 @@ const postData = async (url = "", data = {}) => {
 };
 
 
+
+// Event listener on submit button
 document.addEventListener("DOMContentLoaded", () => {
   const button_submit = document.getElementById("generate");
   button_submit.addEventListener("click", tripDetails);

@@ -9,9 +9,12 @@ $colour-dark-grey: #708090;
 body {
   background-color: #f5f5dc;
   min-height: 100vh;
+  font: 1.2rem $font-main;
+  font-weight: 200;
+  color: $colour-dark-blue;
 }
 
-
+// Grids
 
 /* Mobile */
 .container {
@@ -26,7 +29,7 @@ body {
       "ft";
 }
 
-/* Large screen */
+/* Large monitor */
 @media (min-width: 750px) {
 .container {
   display: grid;
@@ -48,7 +51,7 @@ header {
   grid-area: ui;
 }
 
-.trip-info {
+.details {
   grid-area: info;
 }
 
@@ -84,12 +87,15 @@ footer {
 }
 
 
-body {
-    font: 1.2rem $font-main;
-    font-weight: 200;
-    color: $colour-dark-blue;
-  }
+// body {
+//     font: 1.2rem $font-main;
+//     font-weight: 200;
+//     color: $colour-dark-blue;
+//   }
 
+
+
+// Headings
   h1 {
     font: 3rem $font-main;
     font-weight: 500;
@@ -113,10 +119,14 @@ body {
     margin-bottom: .5rem;
   }
 
+
+
   .hide {
     display: none;
   }
 
+
+// Buttons
   input {
     display: block;
     height: 40px;
@@ -142,6 +152,8 @@ button:hover {
   color: $colour-beige;
 }
 
-.details {
-  margin-bottom: 10px;
+
+
+.particulars {
+  margin-bottom: 20px;
 }

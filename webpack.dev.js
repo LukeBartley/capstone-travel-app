@@ -1,7 +1,7 @@
 const path = require("path")
 const webpack = require("webpack")
-const HtmlWebPackPlugin = require("html-webpack-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebPackPlugin = require("html-webpack-plugin")
 new CleanWebpackPlugin({
     // Simulate the removal of files
     dry: true,
@@ -21,14 +21,14 @@ module.exports = {
     },
     module: {
         rules: [
-            {
+          {
+              test: /\.scss$/,
+              use: ['style-loader', 'css-loader', 'sass-loader']
+          },
+          {
                 test: '/\.js$/',
                 exclude: /node_modules/,
                 loader: "babel-loader"
-            },
-            {
-                test: /\.scss$/,
-                use: ['style-loader', 'css-loader', 'sass-loader']
             }
         ]
     },

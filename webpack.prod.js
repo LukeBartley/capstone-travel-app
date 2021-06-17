@@ -9,16 +9,16 @@ const WorkboxPlugin = require("workbox-webpack-plugin");
 
 
 module.exports = {
-    optimization: {
-        minimizer: [new TerserPlugin({}),
-                new OptimizeCssAssetsPlugin({})]
-    },
-    output: {
-        libraryTarget:'var',
-    library:'Client'
-},
-    entry: './src/client/index.js',
-    mode: 'production',
+  optimization: {
+  minimizer: [new TerserPlugin({}),
+              new OptimizeCssAssetsPlugin({})]
+        },
+          output: {
+              libraryTarget:'var',
+              library:'Client'
+            },
+            entry: './src/client/index.js',
+mode: 'production',
     module: {
         rules: [
             {
@@ -30,11 +30,11 @@ module.exports = {
                 test: /\.scss$/,
                 use:['style-loader', 'css-loader', 'sass-loader']
             },
-
             {
                 test: /\.scss$/,
                 use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
         },
+
         {
             test: /\.(png|jpe?g|gif)$/i,
             use: [{loader: 'file-loader'}]
@@ -43,13 +43,14 @@ module.exports = {
     },
 
     plugins: [
-        new HtmlWebPackPlugin({
+      new HtmlWebPackPlugin({
             template: "./src/client/views/index.html",
             filename: "./index.html",
         }),
-        new MiniCssExtractPlugin({
-            filename: "[name].css"
-        }),
+      new MiniCssExtractPlugin({
+          filename: "[name].css"
+      }),
+
         new WorkboxPlugin.GenerateSW()
 
     ]
