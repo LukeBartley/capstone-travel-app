@@ -72,7 +72,7 @@ const infoFromGeonames = async (city) => {
 
   // Display details of the trip
   document.getElementById(
-    "details"
+    "particulars"
   ).innerHTML = `You leave in ${countdownDays} days <br> and will be away for ${totalTrip} days`;
 
 
