@@ -1,4 +1,7 @@
 ## Capstone travel app
+This project was created as a part of the Udacity Front End Developer Nanodegree program.
+
+This project requires you to create an web app that uses Web API and user data to dynamically update the UI with your trip details such as the destination, date of departure and date of return.
 
 ## To build dev dist folder
 npm run build-dev
